@@ -1,0 +1,14 @@
+{
+  "name": "Hello world",
+  "description": "Hello world",
+  "version": "1.0",
+  "browser_action": {
+    "default_icon": "url.png",
+    "default_popup": "index.html"
+  },
+  "permissions": [
+    "https://facebook.com",
+    "tabs"
+  ],
+  "manifest_version": 2
+}
