@@ -36,21 +36,29 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 var firebaseRef = firebase.database().ref();
-var firebaseRef2 = firebase.database().ref("Học tập");
-var list_url = []
+var firebaseRef2 ;
+var list_url = [];
+var type_forder;
 //once : nghe 1 lần, on luôn nghe
 firebaseRef.on("value", function (snapshot) {
-    console.log(snapshot.val());
     $("#list_url").innerHTML = "";
+    list_url = []
+    $('#list_type').empty();
+
     for (const folder in snapshot.val()) {
-        list_url = []
         var data = {};
         data.text = folder;
+        $('#list_type').append(`
+        <option value="${folder}">
+            ${folder}
+        </option>
+        `)
         data.children = [];
         for (const url in snapshot.val()[folder]) {
             data.children.push({text: snapshot.val()[folder][url].name, data: snapshot.val()[folder][url].url})
         }
         list_url.push(data);
+        $("#jstree_demo_div").jstree("destroy");
         $('#jstree_demo_div').jstree({
             "plugins" : [ "search" ],
             'core' : {
@@ -67,21 +75,32 @@ firebaseRef.on("value", function (snapshot) {
                 }
             });
 
+
     }
 })
 
 document.getElementById("btn_get_URL").addEventListener("click", function () {
+    $('#name_type').css('display','none')
     chrome.tabs.getSelected(null, function (tab) {
+        if ($('#name_type').val() !=""){
+            type_forder = $('#name_type').val();
+        }else {
+            type_forder = $('#list_type').val();
+        }
         // document.getElementById("current_url").setAttribute("href", tab.url);
         //  document.getElementById("current_url").innerHTML = tab.url;
+        firebaseRef2 = firebase.database().ref(type_forder);
         firebaseRef2.push({
-            name: "test",
+            name: $('#decription').val(),
             url: tab.url
         });
 
     });
 
 });
+document.getElementById('add_type').addEventListener('click',function () {
+    $('#name_type').css('display','block')
+})
 
 console.log("list_url",list_url)
 

@@ -2,3 +2,13 @@
     width: 400px;
     height: 500px;
 }
+.form-create{
+    display: flex;
+    align-content: center;
+}
+.form-create-type{
+    display: flex;
+}
+input{
+    width: 100px;
+}
