@@ -43,11 +43,19 @@
 <script>
     //ID CHAT NHOM TEST BOT -533554248
     //ID CHAT NHOM 2021 -463500764
-
+    var offset=100;
     var length=0;
+    var update_id;
+    $.ajax({
+        url:"https://api.simsimi.net/v1/?text=hi&lang=vi&cf=true",
+        type:"GET",
+        success: function (data) {
+            console.log(data);
+        }
+    })
     setInterval(function () {
         $.ajax({
-            url:"https://api.telegram.org/bot1805142438:AAFawi8hItLrsUv-H6Qqp0HYuoGG27OlaN4/getUpdates?offset=100",
+            url:"https://api.telegram.org/bot1805142438:AAFawi8hItLrsUv-H6Qqp0HYuoGG27OlaN4/getUpdates?offset="+offset,
             method : "GET",
             async: true,
             success : function (data) {
@@ -69,31 +77,34 @@
                 //
                 // }
 
-                if (data.result.length != length){
-                    length = data.result.length;
-                    if( data.result[length-1].message !=undefined){
-                                message= data.result[length-1].message.text;
-                                if(message!= undefined)
-                                    if(message.includes("/hello @tutt20_bot")){
-                                        $.ajax({
-                                            url:"https://api.telegram.org/bot1805142438:AAFawi8hItLrsUv-H6Qqp0HYuoGG27OlaN4/sendMessage?chat_id=-533554248&text=hello"+" " + data.result[length-1].message.from.first_name+" "+data.result[length-1].message.from.last_name,
-                                            type:"GET",
-                                            success : function () {
+                offset=data.result[data.result.length-1].update_id;
+                if(update_id!=offset){
+                    update_id =offset;
+                    if( data.result[data.result.length-1].message !=undefined){
+                        message= data.result[data.result.length-1].message.text;
+                        if(message!= undefined)
+                            if(message.includes("/hello")){
+                                $.ajax({
+                                    url:"https://api.telegram.org/bot1805142438:AAFawi8hItLrsUv-H6Qqp0HYuoGG27OlaN4/sendMessage?chat_id=-533554248&text=hello"+" " + data.result[data.result.length-1].message.from.first_name+" "+data.result[data.result.length-1].message.from.last_name,
+                                    type:"GET",
+                                    success : function () {
 
-                                            }
-                                        })
                                     }
-                                    else if(message.includes("/xsmb @tutt20_bot")){
-                                        // $.ajax({
-                                        //     url:"https://api.telegram.org/bot1805142438:AAFawi8hItLrsUv-H6Qqp0HYuoGG27OlaN4/sendMessage?chat_id=-463500764&text="+$(".giaidb").text().trim().substr(3),
-                                        //     type:"GET",
-                                        //     success : function () {
-                                        //
-                                        //     }
-                                        // })
-                                    }
+                                })
                             }
+                            else if(message.includes("/xsmb")){
+                                $.ajax({
+                                    url:"https://api.telegram.org/bot1805142438:AAFawi8hItLrsUv-H6Qqp0HYuoGG27OlaN4/sendMessage?chat_id=-533554248&text="+$(".giaidb").text().trim().substr(3),
+                                    type:"GET",
+                                    success : function () {
+
+                                    }
+                                })
+                            }
+                    }
+
                 }
+
             }
 
         })
