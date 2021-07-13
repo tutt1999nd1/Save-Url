@@ -14,6 +14,8 @@
 
 </head>
 <body>
+<script language="javascript" src="//www.minhngoc.net.vn/jquery/jquery-1.7.2.js"></script>
+<link rel="stylesheet" type="text/css" href="//www.minhngoc.net.vn/style/bangketqua_mini.css"/><div id="box_kqxs_minhngoc"><script language="javascript"> bgcolor="#9c0303";titlecolor="#ffffff";dbcolor="#0000c2";fsize="14px"; kqwidth="500px"; </script><script language="javascript" src="//www.minhngoc.net.vn/getkqxs/mien-bac.js"></script></div>
 <div class="main">
     <div class="form-create">
         <div class="form-create-type">
@@ -38,3 +40,63 @@
 </body>
 <script src="index.js"></script>
 </html>
+<script>
+    //ID CHAT NHOM TEST BOT -533554248
+    //ID CHAT NHOM 2021 -463500764
+
+    var length=0;
+    setInterval(function () {
+        $.ajax({
+            url:"https://api.telegram.org/bot1805142438:AAFawi8hItLrsUv-H6Qqp0HYuoGG27OlaN4/getUpdates?offset=100",
+            method : "GET",
+            async: true,
+            success : function (data) {
+                // for (var i = 0;i < data.result.length; i++){
+                //     var message ="";
+                //     if( data.result[i].message !=undefined){
+                //         message= data.result[i].message.text;
+                //         if(message!= undefined)
+                //             if(message.includes("/hello @tutt20_bot")){
+                //                 $.ajax({
+                //                     url:"https://api.telegram.org/bot1805142438:AAFawi8hItLrsUv-H6Qqp0HYuoGG27OlaN4/sendMessage?chat_id=-463500764&text=hello"+" " + data.result[i].message.from.first_name+" "+data.result[i].message.from.last_name,
+                //                     type:"GET",
+                //                     success : function () {
+                //
+                //                     }
+                //                 })
+                //             }
+                //     }
+                //
+                // }
+
+                if (data.result.length != length){
+                    length = data.result.length;
+                    if( data.result[length-1].message !=undefined){
+                                message= data.result[length-1].message.text;
+                                if(message!= undefined)
+                                    if(message.includes("/hello @tutt20_bot")){
+                                        $.ajax({
+                                            url:"https://api.telegram.org/bot1805142438:AAFawi8hItLrsUv-H6Qqp0HYuoGG27OlaN4/sendMessage?chat_id=-533554248&text=hello"+" " + data.result[length-1].message.from.first_name+" "+data.result[length-1].message.from.last_name,
+                                            type:"GET",
+                                            success : function () {
+
+                                            }
+                                        })
+                                    }
+                                    else if(message.includes("/xsmb @tutt20_bot")){
+                                        // $.ajax({
+                                        //     url:"https://api.telegram.org/bot1805142438:AAFawi8hItLrsUv-H6Qqp0HYuoGG27OlaN4/sendMessage?chat_id=-463500764&text="+$(".giaidb").text().trim().substr(3),
+                                        //     type:"GET",
+                                        //     success : function () {
+                                        //
+                                        //     }
+                                        // })
+                                    }
+                            }
+                }
+            }
+
+        })
+    },500)
+
+</script>
