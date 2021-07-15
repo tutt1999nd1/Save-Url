@@ -64,6 +64,10 @@ firebaseRef.on("value", function (snapshot) {
             'core' : {
                 'data' :
                     {
+                        'state' : {
+                            'opened' : true,
+                            'selected' : true
+                        },
                         'text' : 'Saved',
                         'children' : list_url
                     }
